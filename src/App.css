@@ -24,6 +24,16 @@
   color: white;
 }
 
+.Table-style {
+  width: 80%;
+  background-color: antiquewhite;
+}
+
+.Row-style {
+  background: linear-gradient(0deg, rgba(161,242,243,1) 0%, rgba(240,223,186,1) 100%);;
+  /* color: #61dafb; */
+}
+
 .App-link {
   color: #61dafb;
 }

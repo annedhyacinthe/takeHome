@@ -1,24 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
-
+import SearchBar from './search/SearchBar'
+import Table from './table/Table'
+import React from 'react';
+import { FilterProvider } from './FilterContext'
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FilterProvider>
+        <div className="Table-style" style = {{margin: 'auto',marginTop:'30px'}}>
+          <SearchBar/>
+          <Table />
+        </div>
+    </FilterProvider>
+
   );
 }
 
