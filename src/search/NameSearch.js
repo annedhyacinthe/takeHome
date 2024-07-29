@@ -3,15 +3,15 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FilterContext } from '../FilterContext'
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import debounce from 'lodash.debounce'
 import data from '../data/props.json'
 function NameSearch() {
     const [currName, setCurrName] = useState('');
     const [selectedNames, setSelectedNames] = useState([]);
     const [filteredNames, setFilteredNames] = useState([]);
+    const dropdownRef = useRef(null);
     const { setplayerFirstIndex } = useContext(FilterContext)
-    let currentNames = new Set()
     function helper(curr){
         console.log('Hit',curr)
         setCurrName(curr)
@@ -19,15 +19,12 @@ function NameSearch() {
     }
     const debounceFilter = useCallback (
         debounce((val) => {fetchNames(val)
-        },500),
+        },50),
         []
     )
     function fetchNames(name){
         console.log('FETCH',name)
         let namesSeen = new Set()
-    //     const filteredData = data.filter((person) => 
-    //         person.playerName.toLowerCase().includes(name.toLowerCase())
-    //    );
         const filteredData = data.filter((person) => {
             if(person.playerName.toLowerCase().includes(name.toLowerCase())){
                 if(!namesSeen.has(person.playerName)){
@@ -40,6 +37,7 @@ function NameSearch() {
     }
     function helperS (e,name){
         console.log(e)
+        // e.stopPropagation()
         // if(currentNames.has(name)){
         //     currentNames.delete(name)
         // } else {
@@ -51,7 +49,7 @@ function NameSearch() {
     }
   return (
     <div style={{display :'flex', justifyContent:'space-between'}}>
-        <Dropdown style={{display :'grid', width:'67%'}} autoClose="outside">
+        <Dropdown ref={dropdownRef} style={{display :'grid', width:'67%'}}  autoClose='outside'>
       <Dropdown.Toggle style={{display :'flex', alignItems: 'center', justifyContent: 'space-between', padding:'0px 12px', border:'0px'}}>
       <Form.Control
             type="search"
@@ -65,10 +63,17 @@ function NameSearch() {
                 helper(e.target.value)
                 }
             }
+            onClick={(e) => {
+                if (dropdownRef.current.classList.contains("show")){
+                    console.log(e)
+                    console.log(dropdownRef.current.classList)
+                    e.stopPropagation()
+                }
+            }}
             />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu style = {{width: '100%'}} >
+      <Dropdown.Menu style = {{width: '100%'}} autoClose="outside" >
       {selectedNames.map((person) =>(
             <Dropdown.Item href="#/action-1">
                 <Form.Check
