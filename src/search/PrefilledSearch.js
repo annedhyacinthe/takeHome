@@ -13,7 +13,7 @@ function PrefilledSearch(props) {
         {props.dropdownType}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu style = {{width: '100%'}}>
         {props.dropdownOptions.map((option) =>(
             <Dropdown.Item href="#/action-1">{option}</Dropdown.Item>
             ))}

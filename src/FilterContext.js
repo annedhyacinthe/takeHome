@@ -6,10 +6,10 @@ export const FilterProvider = ({ children }) => {
     const [statType, setStatType] = useState([]);
     const [status, setStatus] = useState([]);
     const [team, setTeam] = useState([]);
-    const [playerFirstIndex, setplayerFirstIndex] = useState([]);
+    const [players, setPlayers] = useState([]);
 
     return(
-        <FilterContext.Provider value={{position, setPosition, status, setStatus, team, setTeam, playerFirstIndex, setplayerFirstIndex, statType, setStatType}}>
+        <FilterContext.Provider value={{position, setPosition, status, setStatus, team, setTeam, players, setPlayers, statType, setStatType}}>
             {children}
         </FilterContext.Provider>
     )
