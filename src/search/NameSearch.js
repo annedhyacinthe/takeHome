@@ -8,23 +8,30 @@ import debounce from 'lodash.debounce'
 import data from '../data/props.json'
 function NameSearch() {
     const [currName, setCurrName] = useState('');
-    const [selectedNames, setSelectedNames] = useState([]);
-    const [filteredNames, setFilteredNames] = useState([]);
+    const [selectedPlayers, setSelectedPlayers] = useState([]);
+    const [filteredPlayers, setFilteredPlayers] = useState([]);
     const dropdownRef = useRef(null);
-    const { setplayerFirstIndex } = useContext(FilterContext)
+    const { setPlayers } = useContext(FilterContext)
     function helper(curr){
         console.log('Hit',curr)
         setCurrName(curr)
         debounceFilter(curr)
     }
+    // console.log('SELECTED1',selectedPlayers)
     const debounceFilter = useCallback (
         debounce((val) => {fetchNames(val)
         },50),
         []
     )
     function fetchNames(name){
+        // useEffect(() => {
         console.log('FETCH',name)
         let namesSeen = new Set()
+        console.log('SELECTED',selectedPlayers)
+        for(let i = 0; i < selectedPlayers.length; i++){
+            namesSeen.add(selectedPlayers[i].playerName.toLowerCase())
+        }
+        console.log('NAMES SEEN',namesSeen)
         const filteredData = data.filter((person) => {
             if(person.playerName.toLowerCase().includes(name.toLowerCase())){
                 if(!namesSeen.has(person.playerName)){
@@ -33,11 +40,28 @@ function NameSearch() {
                 }
             }
             })
-        setFilteredNames(filteredData)
+            console.log('FILTERED',filteredData)
+        setFilteredPlayers(filteredData)
     }
-    function helperS (e,name){
-        setSelectedNames([...selectedNames,name])
-        console.log(selectedNames)
+    
+    function handleCheck (list,player){
+        let index = list === 'filtered' ? filteredPlayers.findIndex((curr) => curr.playerId === player.playerId) :
+         selectedPlayers.findIndex((curr) => curr.playerId === player.playerId)
+        if(-1 < index){
+            if (list === 'filtered'){
+                let holder = filteredPlayers
+                // console.log('SEL',selectedPlayers)
+                holder.splice(index,1)
+                setFilteredPlayers([...holder])
+                setSelectedPlayers([...selectedPlayers,player])
+            } else {
+                let holder = selectedPlayers
+                console.log('SEL',selectedPlayers)
+                holder.splice(index,1)
+                setSelectedPlayers([...holder])
+                setFilteredPlayers([...filteredPlayers,player])
+            }
+        }
     }
   return (
     <div style={{display :'flex', justifyContent:'space-between'}}>
@@ -52,12 +76,11 @@ function NameSearch() {
             style = {{boxShadow: 'none', borderColor: 'transparent'}}
             onChange = {(e) => {
                 helper(e.target.value)
+                console.log('Selected',selectedPlayers)
                 }
             }
             onClick={(e) => {
                 if (dropdownRef.current.classList.contains("show")){
-                    console.log(e)
-                    console.log(dropdownRef.current.classList)
                     e.stopPropagation()
                 }
             }}
@@ -65,33 +88,21 @@ function NameSearch() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu style = {{width: '100%'}} autoClose="outside" >
-      {/* {selectedNames.map((person) =>(
-            <Dropdown.Item href="#/action-1">
-                <Form.Check
-                    inline
-                    label={person}
-                    name="group1"
-                    id={person.playerId}
-                    onClick = {(e) => helperS(e,person) }
-                />
+      {selectedPlayers.map((person) =>(
+            <Dropdown.Item href="#/action-1" onClick = {() => handleCheck('selected',person) }>
+                {person.playerName}
         </Dropdown.Item>
             ))}
-        <Dropdown.Divider /> */}
-        {filteredNames.map((person) =>(
-            <Dropdown.Item href="#/action-1" key={person.playerId}>
-                <Form.Check
-                    inline
-                    label={person.playerName}
-                    name="group1"
-                    id={person.playerId}
-                    onClick = {(e) => helperS(e,person.playerName) }
-                />
+        <Dropdown.Divider />
+        {filteredPlayers.map((person) =>(
+            <Dropdown.Item href="#/action-1" key={person.playerId} onClick = {() => handleCheck('filtered',person) }>
+                {person.playerName}
         </Dropdown.Item>
             ))}
       </Dropdown.Menu>
     </Dropdown>
-    <Button variant="danger" style={{width:'15%'}}>Clear</Button>
-    <Button variant="danger" style={{width:'15%'}}>Search</Button>
+    <Button variant="danger" style={{width:'15%'}} onClick = {() => setSelectedPlayers([]) }>Clear</Button>
+    <Button variant="danger" style={{width:'15%'}} onClick = {() => setPlayers(selectedPlayers) }>Search</Button>
     </div>
   );
 }
