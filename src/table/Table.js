@@ -3,7 +3,7 @@ import { FilterContext } from '../FilterContext'
 import React, { useContext } from 'react';
 
 function Table() {
-  const { position } = useContext(FilterContext)
+  const { players } = useContext(FilterContext)
   return (
       <table style = {{width: '100%'}}>
         <thead>
@@ -11,22 +11,24 @@ function Table() {
             <th>Team</th>
             <th>Player</th>
             <th>Position</th>
+            <th>Type</th>
             <th>Line</th>
-            <th>High</th>
-            <th>Low</th>
+            {/* <th>High</th>
+            <th>Low</th> */}
           </tr>
         </thead>
         <tbody>
-
-          <tr className="Row-style">
-              <td >Table cell 1</td>
-              <td >Table cell 2</td>
-              <td >Table cell 3</td>
-              <td >Table cell 4</td>
-              <td >Table cell 5</td>
-              <td >Table cell 6</td>
-            {/* ))} */}
-          </tr>
+        {players.map((person) =>(
+            <tr className="Row-style">
+                <td>{person.teamNickname}</td>
+                <td>{person.playerName}</td>
+                <td>{person.position}</td>
+                <td>{person.statType}</td>
+                <td>{person.line}</td>
+                {/* <td>{person.}</td>
+                <td>{person.}</td> */}
+            </tr>
+          ))}
         </tbody>
       </table>
 

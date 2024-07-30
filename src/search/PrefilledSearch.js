@@ -2,13 +2,16 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import { FilterContext } from '../FilterContext'
 import React, { useContext } from 'react';
+
 function PrefilledSearch(props) {
-    const { setPosition } = useContext(FilterContext)
-    setTimeout(() => {
-        setPosition(['anne'])
-      }, "1000");
+    const { position, setPosition, status, setStatus, statType, setStatType } = useContext(FilterContext)
+    // setTimeout(() => {
+    //     setPosition(['anne'])
+    //   }, "1000");
+
+    
   return (
-    <Dropdown style={{display :'grid'}}>
+    <Dropdown style={{display :'grid'}} autoClose='outside'>
       <Dropdown.Toggle variant={props.variantType} style={{display :'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         {props.dropdownType}
       </Dropdown.Toggle>
