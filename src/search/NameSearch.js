@@ -36,16 +36,8 @@ function NameSearch() {
         setFilteredNames(filteredData)
     }
     function helperS (e,name){
-        console.log(e)
-        // e.stopPropagation()
-        // if(currentNames.has(name)){
-        //     currentNames.delete(name)
-        // } else {
-        //     currentNames.add(name)
-        // }
         setSelectedNames([...selectedNames,name])
-        console.log('selected',selectedNames)
-        // console.log('a',currentNames.size)
+        console.log(selectedNames)
     }
   return (
     <div style={{display :'flex', justifyContent:'space-between'}}>
@@ -59,7 +51,6 @@ function NameSearch() {
             value = {currName}
             style = {{boxShadow: 'none', borderColor: 'transparent'}}
             onChange = {(e) => {
-                // setName(e.target.value)
                 helper(e.target.value)
                 }
             }
@@ -74,7 +65,7 @@ function NameSearch() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu style = {{width: '100%'}} autoClose="outside" >
-      {selectedNames.map((person) =>(
+      {/* {selectedNames.map((person) =>(
             <Dropdown.Item href="#/action-1">
                 <Form.Check
                     inline
@@ -85,9 +76,9 @@ function NameSearch() {
                 />
         </Dropdown.Item>
             ))}
-        <Dropdown.Divider />
+        <Dropdown.Divider /> */}
         {filteredNames.map((person) =>(
-            <Dropdown.Item href="#/action-1">
+            <Dropdown.Item href="#/action-1" key={person.playerId}>
                 <Form.Check
                     inline
                     label={person.playerName}
