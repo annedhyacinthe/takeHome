@@ -99,18 +99,33 @@ function NameSearch() {
                 />
             </Dropdown.Toggle>
 
-            <Dropdown.Menu style = {{width: '100%'}} autoClose="outside" >
-            {selectedPlayers.map((person) =>(
-                <Dropdown.Item href="#/action-1" onClick = {() => handleCheck('selected',person) }>
-                    {person.playerName}
-            </Dropdown.Item>
-                ))}
-            <Dropdown.Divider />
-            {filteredPlayers.map((person) =>(
-                <Dropdown.Item href="#/action-1" key={person.playerId} onClick = {() => handleCheck('filtered',person) }>
-                    {person.playerName}
-            </Dropdown.Item>
-                ))}
+            <Dropdown.Menu style = {{width: '100%',height:'300px'}} autoClose="outside" >
+            <div style={{height:'250px',overflow: 'scroll'}}>
+                {selectedPlayers && 0 < selectedPlayers.length && (
+                    <>
+                        <text style={{ fontSize: '80%', color: 'gray', marginLeft: '5px' }}>Selected</text>
+                        {selectedPlayers.map((person) => (
+                            <Dropdown.Item href="#/action-1" onClick={() => handleCheck('selected', person)} key={person.playerName}>
+                                {person.playerName}
+                            </Dropdown.Item>
+                        ))}
+                        <Dropdown.Divider style={{ marginBottom: '0px' }} />
+                    </>
+                )}
+                {filteredPlayers && 0 < filteredPlayers.length && (
+                    <>
+                        <text style = {{fontSize: '80%', color: 'gray', marginLeft: '5px'}}>Unselected</text>
+                        {filteredPlayers.map((person) =>(
+                            <Dropdown.Item href="#/action-1" key={person.playerId} onClick = {() => handleCheck('filtered',person) }>
+                                {person.playerName}
+                        </Dropdown.Item>
+                    ))}
+                    </>
+                )}
+            </div>
+            <div>
+                <Button style={{width:'50%'}} variant="danger">Apply</Button>
+            </div>
             </Dropdown.Menu>
         </Dropdown>
         <Button variant="danger" style={{width:'15%'}} onClick = {() => setSelectedPlayers([]) }>Clear</Button>
