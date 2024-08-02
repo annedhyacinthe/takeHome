@@ -9,13 +9,13 @@ function SearchBar() {
         <NameSearch />
       </div>
       <div style = {{width: '19%'}}>
-        <PrefilledSearch variantType = "success" dropdownType = "Position" dropdownOptions = {['PF','PG','SF','SG','C']} />
+        <PrefilledSearch variantType = "success" dropdownType = "positions" dropdownOptions = {['PF','PG','SF','SG','C']} />
       </div>
       <div style = {{width: '19%'}}>
-        <PrefilledSearch variantType = "success" dropdownType = "Stat Type" dropdownOptions = {['Assists','Points','Rebounds','Steals']} />
+        <PrefilledSearch variantType = "success" dropdownType = "statType" dropdownOptions = {['Assists','Points','Rebounds','Steals']} />
       </div>
       <div style = {{width: '19%'}}>
-        <PrefilledSearch variantType = "success" dropdownType = "Market Status" dropdownOptions = {['Suspended','Not Suspended']} />
+        <PrefilledSearch variantType = "success" dropdownType = "status" dropdownOptions = {['Suspended','Not Suspended']} />
       </div>
     </div>
   );
