@@ -3,7 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FilterContext } from '../FilterContext'
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 
 function PrefilledSearch(props) {
     const { positions, setPositions, status, setStatus, statType, setStatType } = useContext(FilterContext)
@@ -11,23 +11,25 @@ function PrefilledSearch(props) {
     let selection = {}
 
   function setFilter(){
-    console.log('hit')
     switch(props.dropdownType){
       case 'statType':
         setStatType(selection)
-        console.log('done')
         break
       case 'positions':
-        console.log('done 1')
         setPositions(selection)
-        console.log('done 2')
         break
       case 'status':
         setStatus(selection)
         break
     }
   }
-    
+  // function updateFilter(originalSelection,currentSelection){
+  //   let keys = Object.keys(originalSelection)
+  //   for(let i = 0; i < keys.length; i++){
+
+  //   }
+  // }
+
   return (
     <Dropdown style={{display :'grid'}} autoClose='outside' id={props.dropdownType}>
       <Dropdown.Toggle variant={props.variantType} id='dropToggle' style={{display :'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -43,6 +45,7 @@ function PrefilledSearch(props) {
                     name="group1"
                     id={option}
                     onClick={(e) => {
+                      console.log('onClick',positions)
                       if(!selection[option]){
                         selection[option] = true
                       }else{

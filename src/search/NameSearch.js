@@ -16,7 +16,6 @@ function NameSearch() {
     const { setPlayers } = useContext(FilterContext)
 
     function helper(curr){
-        console.log('Hit',curr)
         setCurrName(curr)
         debounceFilter(curr)
     }
@@ -28,15 +27,12 @@ function NameSearch() {
     )
 
     function fetchNames(name){
-        console.log('FETCH',name)
         let namesSeen = new Set()
-        console.log('SELECTED', selectedPlayersRef.current);
     
         selectedPlayersRef.current.forEach(player => {
         namesSeen.add(player.playerName);
         });
         
-        console.log('NAMES SEEN',namesSeen)
         const filteredData = data.filter((person) => {
             if(person.playerName.toLowerCase().includes(name.toLowerCase())){
                 if(!namesSeen.has(person.playerName)){
@@ -45,15 +41,12 @@ function NameSearch() {
                 }
             }
             })
-            console.log('FILTERED',filteredData)
         setFilteredPlayers(filteredData)
     }
     
     useEffect(() => {
-        console.log('USEEFFECT')
         selectedPlayersRef.current = selectedPlayers;
         fetchNames(currName);
-        console.log('USEEFFECT DONE')
       }, [selectedPlayers]);
 
     function handleCheck (list,player){
@@ -62,13 +55,11 @@ function NameSearch() {
         if(-1 < index){
             if (list === 'filtered'){
                 let holder = filteredPlayers
-                // console.log('SEL',selectedPlayers)
                 holder.splice(index,1)
                 setFilteredPlayers([...holder])
                 setSelectedPlayers([...selectedPlayers,player])
             } else {
                 let holder = selectedPlayers
-                console.log('SEL',selectedPlayers)
                 holder.splice(index,1)
                 setSelectedPlayers([...holder])
                 setFilteredPlayers([...filteredPlayers,player])
@@ -123,8 +114,9 @@ function NameSearch() {
                     </>
                 )}
             </div>
-            <div>
-                <Button style={{width:'50%'}} variant="danger">Apply</Button>
+            <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                <Button style={{width:'48%'}} variant="danger">Select All</Button>
+                <Button style={{width:'48%'}} variant="danger">Unselect All</Button>
             </div>
             </Dropdown.Menu>
         </Dropdown>
