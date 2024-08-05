@@ -130,8 +130,9 @@ function Table() {
   }, [players, positions, statType, status]);
 
   return (
+    <div style = {{height: '500px',overflowY: 'scroll'}}>
       <table style = {{width: '100%'}}>
-        <thead>
+        <thead style = {{position: 'sticky',top: '0', backgroundColor: 'antiquewhite'}}>
           <tr>
             <th>Team</th>
             <th>Player</th>
@@ -165,7 +166,7 @@ function Table() {
           }
         </tbody>
       </table>
-
+      </div>
   );
 }
 
