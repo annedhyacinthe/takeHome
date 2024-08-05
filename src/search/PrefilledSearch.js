@@ -3,23 +3,24 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FilterContext } from '../FilterContext'
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 
 function PrefilledSearch(props) {
     const { positions, setPositions, status, setStatus, statType, setStatType } = useContext(FilterContext)
+    const [selection, setSelection] = useState({});
     const formRef = useRef([]);
-    let selection = {}
+    // let selection = {}
 
   function setFilter(){
     switch(props.dropdownType){
       case 'statType':
-        setStatType(selection)
+        setStatType({...selection})
         break
       case 'positions':
-        setPositions(selection)
+        setPositions({...selection})  
         break
       case 'status':
-        setStatus(selection)
+        setStatus({...selection})
         break
     }
   }
@@ -45,13 +46,13 @@ function PrefilledSearch(props) {
                     name="group1"
                     id={option}
                     onClick={(e) => {
-                      console.log('onClick',positions)
                       if(!selection[option]){
                         selection[option] = true
+                        setSelection(selection)
                       }else{
                         delete selection[option]
+                        setSelection(selection)
                       }
-                      console.log(selection)
                   }}
                 />
             </Dropdown.Item>

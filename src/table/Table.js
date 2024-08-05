@@ -12,9 +12,8 @@ function Table() {
     for(let i = 0; i < players.length;i++){
       let currentPlayer = players[i]
 
-      //check positions selected
-      if(Object.keys(positions).length && !positions[currentPlayer.position]){
-        continue
+      if (!isPositionSelected(currentPlayer)) {
+        continue;
       }
       
       let currPlayerPropFirstIndex = findFirstIndex(currentPlayer,'data')
@@ -30,7 +29,11 @@ function Table() {
 
           if(playerHolder[i].marketSuspended === 1 || currSuspendedStatus.isSuspended){
             playerHolder[i]['isSuspended'] = true
-          } else { playerHolder[i]['isSuspended'] = false}
+            playerHolder[i]['shownAsSuspended'] = true
+          } else { 
+            playerHolder[i]['isSuspended'] = false
+            playerHolder[i]['shownAsSuspended'] = false
+          }
       }
       // if(status['Suspended'] && !status['Not Suspended']){
       //   if(!playerHolder[i]['isSuspended']){
@@ -41,6 +44,10 @@ function Table() {
       holder[currentPlayer.playerName] = playerHolder.filter((stat) => checkSelectedStatus(stat))
     }
     setPlayersBeingShowed(holder)
+  }
+
+  function isPositionSelected(currentPlayer) {
+    return !(Object.keys(positions).length && !positions[currentPlayer.position]);
   }
 
   function checkSelectedStatus(stat){
@@ -80,7 +87,6 @@ function Table() {
         }
       }
     }
-    console.log('prob',highProbabilityExist,'line',marketLineExist)
     return {'high':high,'low':low,'isSuspended': !marketLineExist || !highProbabilityExist }
   }
 
@@ -113,9 +119,16 @@ function Table() {
     return holderArr
   }
 
+  const toggleSuspension = (player,index) => {
+    const playersCopy = {...playersBeingShowed};
+    playersCopy[player][index].shownAsSuspended = !playersCopy[player][index].shownAsSuspended;
+    setPlayersBeingShowed(playersCopy);
+  };
+
   useEffect(() => {
     getPlayersToBeShowed()
   }, [players, positions, statType, status]);
+
   return (
       <table style = {{width: '100%'}}>
         <thead>
@@ -125,20 +138,27 @@ function Table() {
             <th>Position</th>
             <th>Type</th>
             <th>Line</th>
-            {/* <th>High</th>
-            <th>Low</th> */}
+            <th>High</th>
+            <th>Low</th>
           </tr>
         </thead>
         <tbody>
         {
           Object.keys(playersBeingShowed).map((playerArrKey) => {
-            return playersBeingShowed[playerArrKey].map((player) =>(
-              <tr className="Row-style">
+            return playersBeingShowed[playerArrKey].map((player,index) =>(
+              <tr 
+                className={`Row-style ${player.shownAsSuspended && 'Suspended'}`}
+                onClick={() => {
+                  toggleSuspension(playerArrKey,index)
+              }}
+              >
                   <td>{player.teamNickname}</td>
                   <td>{player.playerName}</td>
                   <td>{player.position}</td>
                   <td>{player.statType}</td>
                   <td>{player.line}</td>
+                  <td>{player.high}</td>
+                  <td>{player.low}</td>
               </tr>
             ))
           }) 

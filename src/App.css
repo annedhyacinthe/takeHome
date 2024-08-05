@@ -29,10 +29,15 @@
   background-color: antiquewhite;
 }
 
+.Suspended {
+  background: red !important;
+}
+
 .Row-style {
-  background: linear-gradient(0deg, rgba(161,242,243,1) 0%, rgba(240,223,186,1) 100%);;
+  background: linear-gradient(0deg, rgba(161,242,243,1) 0%, rgba(240,223,186,1) 100%);
   /* color: #61dafb; */
 }
+
 
 .App-link {
   color: #61dafb;
