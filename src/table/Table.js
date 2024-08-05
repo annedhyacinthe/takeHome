@@ -42,6 +42,9 @@ function Table() {
       // }
 
       holder[currentPlayer.playerName] = playerHolder.filter((stat) => checkSelectedStatus(stat))
+      if(holder[currentPlayer.playerName].length === 0){
+        delete holder[currentPlayer.playerName]
+      }
     }
     setPlayersBeingShowed(holder)
   }
@@ -129,6 +132,15 @@ function Table() {
     getPlayersToBeShowed()
   }, [players, positions, statType, status]);
 
+  function renderMessage(){
+    if(players.length === 0){
+      return <div style = {{marginTop: '200px',fontSize: 'large', textAlign: 'center'}}>Choose a Player or Team</div>
+    }
+    if(Object.keys(playersBeingShowed).length === 0){
+      return <div style = {{marginTop: '200px',fontSize: 'large', textAlign: 'center'}}>Check Filters</div>
+    }
+  }
+
   return (
     <div style = {{height: '500px',overflowY: 'scroll'}}>
       <table style = {{width: '100%'}}>
@@ -144,28 +156,29 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-        {
-          Object.keys(playersBeingShowed).map((playerArrKey) => {
-            return playersBeingShowed[playerArrKey].map((player,index) =>(
-              <tr 
-                className={`Row-style ${player.shownAsSuspended && 'Suspended'}`}
-                onClick={() => {
-                  toggleSuspension(playerArrKey,index)
-              }}
-              >
-                  <td>{player.teamNickname}</td>
-                  <td>{player.playerName}</td>
-                  <td>{player.position}</td>
-                  <td>{player.statType}</td>
-                  <td>{player.line}</td>
-                  <td>{player.high}</td>
-                  <td>{player.low}</td>
-              </tr>
-            ))
-          }) 
-          }
+        { Object.keys(playersBeingShowed).length > 0 &&
+      Object.keys(playersBeingShowed).map((playerArrKey) => {
+        return playersBeingShowed[playerArrKey].map((player,index) =>(
+          <tr 
+            className={`Row-style ${player.shownAsSuspended && 'Suspended'}`}
+            onClick={() => {
+              toggleSuspension(playerArrKey,index)
+          }}
+          >
+              <td>{player.teamNickname}</td>
+              <td>{player.playerName}</td>
+              <td>{player.position}</td>
+              <td>{player.statType}</td>
+              <td>{player.line}</td>
+              <td>{player.high}</td>
+              <td>{player.low}</td>
+          </tr>
+        ))
+      }) 
+    }
         </tbody>
       </table>
+      {Object.keys(playersBeingShowed).length === 0 && renderMessage()}
       </div>
   );
 }

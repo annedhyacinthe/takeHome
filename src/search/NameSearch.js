@@ -127,13 +127,21 @@ function NameSearch() {
             return holder
     }
 
+    function renderPlaceHolder (){
+        let playerArr = Object.keys(selectedPlayers)
+        if(selectedPlayers && 0 < playerArr.length ){
+            return  playerArr.length > 1 ? `${playerArr[0]},${playerArr[1]}` : `${playerArr[0]}`
+        }
+        return "Player or Team Name"
+    }
+
     return (
         <div style={{display :'flex', justifyContent:'space-between'}}>
             <Dropdown ref={dropdownRef} style={{display :'grid', width:'67%'}}  autoClose='outside'>
             <Dropdown.Toggle style={{display :'flex', alignItems: 'center', justifyContent: 'space-between', padding:'0px 12px', border:'0px'}}>
             <Form.Control
                 type="search"
-                placeholder="Player or Team Name"
+                placeholder={renderPlaceHolder()}
                 className="me-2"
                 aria-label="Search"
                 value = {currName}
@@ -152,7 +160,7 @@ function NameSearch() {
 
             <Dropdown.Menu style = {{width: '100%',height:'300px'}} autoClose="outside" >
             <div style={{height:'250px',overflow: 'scroll'}}>
-                {selectedPlayers && 0 < Object.keys(selectedPlayers).length | (selectedTeams && 0 < Object.keys(selectedTeams).length) ? (
+                {selectedPlayers && 0 < Object.keys(selectedPlayers).length || (selectedTeams && 0 < Object.keys(selectedTeams).length) ? (
                     <>
                         <text style={{ fontSize: '80%', color: 'gray', marginLeft: '5px' }}>Selected</text>
                         {Object.keys(selectedTeams).map((team) =>(
