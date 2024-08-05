@@ -140,7 +140,7 @@ function NameSearch() {
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <Dropdown style={{ display: 'grid', width: '67%' }} autoClose="outside">
         <Dropdown.Toggle style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0px 12px', border: '0px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0px 12px', color:'black', backgroundColor: 'orange', borderWidth: '0'
         }}
         >
           <Form.Control
@@ -191,14 +191,15 @@ function NameSearch() {
             ) : null}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-            <Button style={{ width: '48%' }} onClick={() => selectAll('add', 'everyone')} variant="danger">Select All</Button>
-            <Button style={{ width: '48%' }} onClick={() => selectAll('delete', 'everyone')} variant="danger">Unselect All</Button>
+            <Button style={{ width: '48%', backgroundColor: 'firebrick', borderWidth: '0', color: 'white' }} onClick={() => selectAll('add', 'everyone')} >Select All</Button>
+            <Button style={{ width: '48%', backgroundColor: 'firebrick', borderWidth: '0', color: 'white' }} onClick={() => selectAll('delete', 'everyone')} >Unselect All</Button>
           </div>
         </Dropdown.Menu>
       </Dropdown>
-      <Button variant="danger" style={{ width: '30%' }} onClick={() => setPlayers(Object.values(selectedPlayers))}>Search</Button>
+      <Button style={{ width: '30%', backgroundColor: 'firebrick',color: 'white', borderWidth: '0' }} onClick={() => setPlayers(Object.values(selectedPlayers))}>Search</Button>
     </div>
   );
 }
 
 export default NameSearch;
+// #dc3545;

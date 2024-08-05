@@ -28,11 +28,11 @@ function PrefilledSearch(props) {
 
   return (
     <Dropdown style={{ display: 'grid' }} autoClose="outside" id={props.dropdownType}>
-      <Dropdown.Toggle variant={props.variantType} id="dropToggle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Dropdown.Toggle id="dropToggle" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color:'black', backgroundColor: 'orange', borderWidth: '0'}}>
         {props.dropdownType}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu style={{ width: '100%' }} id="dropMenu">
+      <Dropdown.Menu style={{ width: '100%', paddingBottom: '1px' }} id="dropMenu">
         {props.dropdownOptions.map((option) => (
           <Dropdown.Item>
             <Form.Check
@@ -51,7 +51,7 @@ function PrefilledSearch(props) {
             />
           </Dropdown.Item>
         ))}
-        <Button variant="danger" style={{ width: '50%' }} onClick={() => setFilter()}>Apply</Button>
+        <Button style={{ width: '100%', backgroundColor:'firebrick', borderWidth: '0' }} onClick={() => setFilter()}>Apply</Button>
       </Dropdown.Menu>
     </Dropdown>
   );
